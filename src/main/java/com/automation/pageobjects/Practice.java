@@ -40,6 +40,14 @@ public class Practice extends TestBase {
 	@FindBy(how=How.CSS,using = ".course-title") public WebElement courseTitle;
 	@FindBy(how=How.XPATH,using = "//legend[contains(.,'Mouse Hover Example')]") public WebElement mouseOverExampleLabelHeader;
 	@FindBy(how=How.ID,using = "name") public WebElement inputNameTextbox;
+	@FindBy(how=How.XPATH,using = "//input[@id='bmwradio']") public WebElement bmwRadioBtn;
+	@FindBy(how=How.XPATH,using = "//input[@id='benzradio']") public WebElement benzRadioBtn;
+	@FindBy(how=How.XPATH,using = "//input[@id='hondaradio']") public WebElement hondaRadioBtn;
+	@FindBy(how=How.XPATH,using = "//select[@id='carselect']") public WebElement carSelectDropDown;
+	@FindBy(how=How.XPATH,using = "//input[@id='bmwcheck']") public WebElement bmwCheckBox;
+	@FindBy(how=How.XPATH,using = "//input[@id='benzcheck']") public WebElement benzCheckBox;
+	@FindBy(how=How.XPATH,using = "//input[@id='hondacheck']") public WebElement hondaCheckBox;
+//	@FindBy(how=How.XPATH,using = "//input[@id='hondacheck']") public WebElement hondaCheckBox;
 	
 	
 	public Practice(WebDriver driver) {
@@ -49,18 +57,39 @@ public class Practice extends TestBase {
 	
 	
 	public void clickRadioButtons () {
-		System.out.println("Clicking Radio Buttons");
+        WebElement [] radioButtons = {bmwRadioBtn,benzRadioBtn,hondaRadioBtn};
+		 
+		 for(WebElement radioBtn : radioButtons) {
+			 System.out.println("Print all options we can select : " + radioBtn);
+			 radioBtn.click();
+		}
 		
 	}
 	
-	public void selectFromDropDown () {
-		System.out.println("Clicking Radio Buttons");
-		
-	}
+	public void selectFromDropDown () throws InterruptedException {
+		WebElement element = carSelectDropDown;
+		 
+		 Select select = new Select(element);
+		 
+		 select.selectByValue("benz");
+		 Thread.sleep(2000);
+		 select.selectByIndex(1);
+		 select.selectByVisibleText("Honda");
+		 System.out.println("Print the list of all options");
+			List<WebElement> options = select.getOptions();
+			int size = options.size();
+			
+			for (int i=0; i<size; i++) {
+				String optionName = options.get(i).getText();
+				System.out.println(optionName);
+			}
+			
+	}		
+
 	
 	public void selectAndDeselectFromSelectBox () {
 		 System.out.println("Select items from Select Box");
-		 System.out.println("Multiple Selecte Header Text is displayed " + checkboxHeaderLabel.isDisplayed());
+		 System.out.println("Multiple Selected Header Text is displayed " + checkboxHeaderLabel.isDisplayed());
 		 WebElement element = inputMultipleSelect;
 		 
 		 Select select = new Select(element);
@@ -131,6 +160,16 @@ public class Practice extends TestBase {
 		
 		driver.switchTo().defaultContent();
 		inputNameTextbox.sendKeys("Test Successful");
+	}
+	
+	public void selectCheckBox () {
+		WebElement [] checkboxes = {bmwCheckBox, benzCheckBox, hondaCheckBox};
+		
+		 for(WebElement checkbox : checkboxes) {
+			 System.out.println("Print all options we can select : " + checkbox);
+			 checkbox.click();
+		 }
+		
 	}
 	
 	public void  scrollElementIntoView(WebElement element) {
