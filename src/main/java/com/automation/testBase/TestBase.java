@@ -90,7 +90,6 @@ public class TestBase {
 		
 	}
 	
-	
 	@Parameters({"browserType", "appURL"})
 	@BeforeClass
 	public void initializeTestBase(String browserType, String appURL) {
@@ -200,19 +199,19 @@ public class TestBase {
 	public Iterator<String> getAllWindows(){
 		Set<String> windows = driver.getWindowHandles();
 		Iterator<String> itr = windows.iterator();
-		System.out.println(itr);
-		return itr;
-		
-	}
-	public static void main(String []args) throws IOException {
-		TestBase testbase = new TestBase();
-		testbase.loadPropertiesFile();
-		System.out.println(testbase.properties.getProperty("url"));
-		System.out.println(testbase.properties.getProperty("testname"));
-		
-	}
-	@AfterClass 
-	public void tearDown() {
-		driver.quit();
-	}
+			System.out.println(itr);
+			return itr;
+			
+		}
+		public static void main(String []args) throws IOException {
+			TestBase testbase = new TestBase();
+			testbase.loadPropertiesFile();
+			System.out.println(testbase.properties.getProperty("url"));
+			System.out.println(testbase.properties.getProperty("testname"));
+			
+		}
+		@AfterClass 
+		public void tearDown() {
+			driver.quit();
+		}
 }

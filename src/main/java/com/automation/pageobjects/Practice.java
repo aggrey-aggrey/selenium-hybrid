@@ -1,8 +1,10 @@
 package com.automation.pageobjects;
 import java.util.List;
 import java.util.Set;
-import org.openqa.selenium.By;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,7 +49,12 @@ public class Practice extends TestBase {
 	@FindBy(how=How.XPATH,using = "//input[@id='bmwcheck']") public WebElement bmwCheckBox;
 	@FindBy(how=How.XPATH,using = "//input[@id='benzcheck']") public WebElement benzCheckBox;
 	@FindBy(how=How.XPATH,using = "//input[@id='hondacheck']") public WebElement hondaCheckBox;
-//	@FindBy(how=How.XPATH,using = "//input[@id='hondacheck']") public WebElement hondaCheckBox;
+    @FindBy(how=How.XPATH,using = "//a[@id='opentab']") public WebElement openTabWindow;
+    @FindBy(how=How.XPATH,using = "//button[@id='search-course-button']") public WebElement searchCourseButton;
+    @FindBy(how=How.XPATH,using = "//input[@name='enter-name']") public WebElement inputEnterYourName;
+    @FindBy(how=How.XPATH,using = "//input[@id='alertbtn']") public WebElement alertButton;
+    @FindBy(how=How.XPATH,using = "//input[@id='confirmbtn']") public WebElement confirmButton;
+
 	
 	
 	public Practice(WebDriver driver) {
@@ -86,7 +93,6 @@ public class Practice extends TestBase {
 			
 	}		
 
-	
 	public void selectAndDeselectFromSelectBox () {
 		 System.out.println("Select items from Select Box");
 		 System.out.println("Multiple Selected Header Text is displayed " + checkboxHeaderLabel.isDisplayed());
@@ -141,12 +147,10 @@ public class Practice extends TestBase {
 				Assert.assertEquals(URL, "https://letskodeit.teachable.com/courses" );
 				
 				searchBox.sendKeys("Java");
-				Thread.sleep(3000);
+				driver.switchTo().defaultContent();
 				break;
 		  }
-			driver.switchTo().window(parentHandle);
-			Assert.assertEquals(pageTitle.getText(),"Practice Page" );
-				
+							
 		}
 		
 	}
@@ -169,6 +173,64 @@ public class Practice extends TestBase {
 			 System.out.println("Print all options we can select : " + checkbox);
 			 checkbox.click();
 		 }
+		
+	}
+	
+	public void switchTabWindow() throws InterruptedException {
+		scrollElementIntoView(pageTitle);
+		String parentHandle = driver.getWindowHandle();
+		System.out.println("Parent Handle: " + parentHandle);
+		
+		//Find Open Window button
+		openTabWindow.click();
+		System.out.println("Opened new tab");
+	
+		//Get all window handles
+		Set<String> handles = driver.getWindowHandles();
+		System.out.print(handles + "\n");
+		
+		//Switching between handles
+		for (String handle: handles){
+			System.out.println(handle);
+			if (!handle.equals(parentHandle)) {
+				driver.switchTo().window(handle);
+				//perform some action after switching window
+				String URL = driver.getCurrentUrl();
+				Assert.assertEquals(URL, "https://letskodeit.teachable.com/courses" );
+				WebElement searchBox = courseSearchBox;
+				searchBox.sendKeys("C#");
+				WebElement hitReturn = searchCourseButton;
+				hitReturn.sendKeys(Keys.ENTER);
+				driver.switchTo().defaultContent();
+			}
+		}
+		
+	}
+	
+	public void alertBoxPop() throws InterruptedException {
+		scrollElementIntoView(pageTitle);
+		WebElement inputName = inputEnterYourName;
+		inputName.sendKeys("John");
+		WebElement alertBtn =  alertButton;
+		alertBtn.click();
+		Thread.sleep(3000);
+		Alert alert = driver.switchTo().alert();
+		Thread.sleep(3000);
+		alert.accept();
+		
+	}
+	
+	public void confirmBoxPop() throws InterruptedException {
+		
+		scrollElementIntoView(pageTitle);
+		WebElement inputName = inputEnterYourName;
+		inputName.sendKeys("Andrew");
+		WebElement confirmBtn =  confirmButton;
+		confirmBtn.click();
+		Thread.sleep(3000);
+		Alert alert = driver.switchTo().alert();
+		Thread.sleep(3000);
+		alert.accept();
 		
 	}
 	
