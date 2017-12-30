@@ -16,8 +16,7 @@ import org.testng.Assert;
 import com.automation.testBase.TestBase;
 
 public class Practice extends TestBase {
-	
-	protected WebDriver driver;
+
 	@FindBy(how=How.XPATH,using = "//h1[contains(.,'Practice Page')]") public WebElement pageTitle;
 	@FindBy(how=How.XPATH,using = "//legend[contains(.,'Radio Button Example')]") public WebElement radioButtonHeaderLabel;
 	@FindBy(how=How.XPATH,using = "//input[@id='bmwradio']") public WebElement inputBmwRadioBtn ;
@@ -54,9 +53,7 @@ public class Practice extends TestBase {
     @FindBy(how=How.XPATH,using = "//input[@name='enter-name']") public WebElement inputEnterYourName;
     @FindBy(how=How.XPATH,using = "//input[@id='alertbtn']") public WebElement alertButton;
     @FindBy(how=How.XPATH,using = "//input[@id='confirmbtn']") public WebElement confirmButton;
-
-	
-	
+   
 	public Practice(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -213,9 +210,7 @@ public class Practice extends TestBase {
 		inputName.sendKeys("John");
 		WebElement alertBtn =  alertButton;
 		alertBtn.click();
-		Thread.sleep(3000);
 		Alert alert = driver.switchTo().alert();
-		Thread.sleep(3000);
 		alert.accept();
 		
 	}
@@ -227,12 +222,11 @@ public class Practice extends TestBase {
 		inputName.sendKeys("Andrew");
 		WebElement confirmBtn =  confirmButton;
 		confirmBtn.click();
-		Thread.sleep(3000);
 		Alert alert = driver.switchTo().alert();
-		Thread.sleep(3000);
 		alert.accept();
 		
 	}
+	
 	
 	public void  scrollElementIntoView(WebElement element) {
 		WebElement ele = element;

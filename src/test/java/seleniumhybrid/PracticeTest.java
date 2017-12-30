@@ -18,7 +18,7 @@ public class PracticeTest extends TestBase{
 		driver = getDriver();
 	}
 	
-    //@Test
+    @Test
 	public void verifyRadioButtons () {
 		System.out.println("Starting VerifyRadioButtons Test");
 		practice = new Practice(driver);
@@ -26,7 +26,7 @@ public class PracticeTest extends TestBase{
 		System.out.println("End Test");
 	}
 	
-	//@Test
+	@Test
 		public void verifyDropDown () throws InterruptedException {
 			System.out.println("Starting VerifyDropDown Test");
 			practice = new Practice(driver);
@@ -34,7 +34,7 @@ public class PracticeTest extends TestBase{
 			System.out.println("End Test");
 		}
 	
-	//@Test
+	@Test
 	public void verifyCheckBox() {
 		System.out.println("Starting VerifyCheckbox Test");
 		practice = new Practice(driver);
@@ -42,7 +42,7 @@ public class PracticeTest extends TestBase{
 		System.out.println("End Test");
 	}
 	
-	//@Test
+	@Test
 	public void verifySelectBox() throws InterruptedException {
 		System.out.println("Starting VerifySelectBox test");
 	    practice = new Practice(driver);
@@ -51,7 +51,7 @@ public class PracticeTest extends TestBase{
 		System.out.println("End of Test");
 		
 	} 
-//	@Test
+    @Test
 	public void verifySwitchToWindow() throws InterruptedException {
 		System.out.println("Starting SwitchToWindow Test");
 		practice = new Practice(driver);
@@ -59,7 +59,7 @@ public class PracticeTest extends TestBase{
 		System.out.println("End of Test");
 	}
 	
-   // @Test
+    @Test
 	public void verifySwitchToIframe() throws InterruptedException {
 		System.out.println("Starting VerifySwitchToInframe Test");
 	    practice = new Practice(driver);
@@ -67,7 +67,7 @@ public class PracticeTest extends TestBase{
 		System.out.println("End of Test");
 	}
     
-   // @Test
+   //@Test
    	public void verifySwitchingTabs() throws InterruptedException {
    		System.out.println("Starting VerifySwitchingTabs Test");
    	    practice = new Practice(driver);
@@ -76,7 +76,7 @@ public class PracticeTest extends TestBase{
    	}
    	
    	
-   // @Test
+    @Test
    	public void verifyConfirmPopWindow() throws InterruptedException {
    		System.out.println("Starting VerifyConfirmPopWindow Test");
    	    practice = new Practice(driver);
@@ -84,7 +84,7 @@ public class PracticeTest extends TestBase{
    		System.out.println("End of Test");
    	}
     
-   // @Test
+    @Test
    	public void verifyAlertWindow() throws InterruptedException {
    		System.out.println("Starting VerifyAlertBoxWindow Test");
    	    practice = new Practice(driver);
@@ -96,7 +96,7 @@ public class PracticeTest extends TestBase{
     public void verifyAllLinksOnThePage () {
     	System.out.println("Start VerifyLinksOnThePage Test");
     	FindLinks findLinks = new FindLinks();
-    	findLinks.findPageLinks(driver);
+    	findLinks.testFindLinks(driver);
     	System.out.println("End the test");
     }
     
