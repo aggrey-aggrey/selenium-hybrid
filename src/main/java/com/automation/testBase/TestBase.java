@@ -1,4 +1,5 @@
 package com.automation.testBase;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,9 +10,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.PropertyConfigurator;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -23,18 +22,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestResult;
-import org.testng.TestNG;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
 
+//@SuppressWarnings("unused")
 @SuppressWarnings("unused")
 public class TestBase {
-	public static final Logger log = Logger.getLogger(TestBase.class.getName());
+	
 	public WebDriver driver;
 	public static WebDriverWait wait;
 	public Properties properties;
@@ -43,12 +38,8 @@ public class TestBase {
 	static String driverPath = "/src/main/java/com/automation/drivers/";
 	static String configPath = "/src/main/java/com/automation/config/";
 	
-	
 	public WebDriver getDriver() {
-		String log4jConfPath = "log4j.properties";
-		PropertyConfigurator.configure(log4jConfPath);
 		return this.driver;
-		
 	}
 	
 	public void setDriver (String browserType, String appURL) {
@@ -113,21 +104,34 @@ public class TestBase {
 	}
 	
 	public void loadPropertiesFile() throws IOException {
-		
-				
 			    properties = new Properties();
 				file = new File(System.getProperty("user.dir") + configPath + "config.properties");
 			    fileinputstream = new FileInputStream(file);
 			    properties.load(fileinputstream);
-				System.out.println("loading config.properties");
 			    
 			    file = new File(System.getProperty("user.dir") + configPath + "org.properties");
 			    fileinputstream = new FileInputStream(file);
 			    properties.load(fileinputstream);
-			    System.out.println("loading org.properties");
 	}
 	
 	public void getPropertiesData() {
+		
+	}
+	
+	
+	public void getaScreenShot(String imageName) {
+		
+		if (imageName.equals("")) {
+			imageName = "blank";
+		}
+		
+		File image = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		String imageLocation = (System.getProperty("user.dir") + "/src/test/java/com/automation/screenshots/");
+		Calendar calendar =  Calendar.getInstance();
+		SimpleDateFormat formater = new SimpleDateFormat ("dd_MM_yyyy_hh_mm_ss");
+		String actualImageName = imageLocation + imageName + "_" + formater.format(calendar.getTime()) + ".png";
+		File destFile = new File(actualImageName);
+		//FileUtils.copyFile(image,destFile);
 		
 	}
 	

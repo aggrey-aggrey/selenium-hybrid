@@ -1,7 +1,7 @@
 package com.automation.pageobjects;
 import java.util.List;
 import java.util.Set;
-import org.apache.log4j.Logger;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -12,10 +12,10 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
 import com.automation.testBase.TestBase;
 
 public class Practice extends TestBase {
-	public static final Logger log = Logger.getLogger(Practice.class.getName());
 
 	@FindBy(how=How.XPATH,using = "//h1[contains(.,'Practice Page')]") public WebElement pageTitle;
 	@FindBy(how=How.XPATH,using = "//legend[contains(.,'Radio Button Example')]") public WebElement radioButtonHeaderLabel;
@@ -64,7 +64,7 @@ public class Practice extends TestBase {
         WebElement [] radioButtons = {bmwRadioBtn,benzRadioBtn,hondaRadioBtn};
 		 
 		 for(WebElement radioBtn : radioButtons) {
-			 log.info("Print all options we can select : " + radioBtn);
+			 System.out.println("Print all options we can select : " + radioBtn);
 			 radioBtn.click();
 		}
 		
@@ -79,20 +79,20 @@ public class Practice extends TestBase {
 		 Thread.sleep(2000);
 		 select.selectByIndex(1);
 		 select.selectByVisibleText("Honda");
-		 log.info("Print the list of all options");
+		 System.out.println("Print the list of all options");
 			List<WebElement> options = select.getOptions();
 			int size = options.size();
 			
 			for (int i=0; i<size; i++) {
 				String optionName = options.get(i).getText();
-				log.info(optionName);
+				System.out.println(optionName);
 			}
 			
 	}		
 
 	public void selectAndDeselectFromSelectBox () {
-		 log.info("Select items from Select Box");
-		 log.info("Multiple Selected Header Text is displayed " + checkboxHeaderLabel.isDisplayed());
+		 System.out.println("Select items from Select Box");
+		 System.out.println("Multiple Selected Header Text is displayed " + checkboxHeaderLabel.isDisplayed());
 		 WebElement element = inputMultipleSelect;
 		 
 		 Select select = new Select(element);
@@ -102,7 +102,7 @@ public class Practice extends TestBase {
 		 
 		 List<WebElement> selectedOptions = select.getAllSelectedOptions();
 		 for(WebElement option : selectedOptions) {
-			 log.info("Print all options we selected: " + option.getText());
+			 System.out.println("Print all options we selected: " + option.getText());
 			 select.deselectAll(); 
 		 }
 		 	
@@ -111,19 +111,19 @@ public class Practice extends TestBase {
 	public void hideAndShowTextBox() throws InterruptedException {
 		
 		scrollElementIntoView(elementDisplayHeaderLabel);
-	     log.info("The header Element Displayed Example is displayed: " + elementDisplayHeaderLabel.isDisplayed());
+	     System.out.println("The header Element Displayed Example is displayed: " + elementDisplayHeaderLabel.isDisplayed());
 		 hideCheckBoxBtn.click();
-		 log.info("The textbox inputShowHideTextBox is now hidden: " + !inputShowHideTextBox.isDisplayed());
+		 System.out.println("The textbox inputShowHideTextBox is now hidden: " + !inputShowHideTextBox.isDisplayed());
 		 showCheckBoxBtn.click();
-		 log.info("The textbox inputShowHideTextBox is now visible: " + inputShowHideTextBox.isDisplayed()); 
+		 System.out.println("The textbox inputShowHideTextBox is now visible: " + inputShowHideTextBox.isDisplayed()); 
 	 
 	 }
 	
 	public void openSwitchWindow () throws InterruptedException {
 		scrollElementIntoView(pageTitle);
-		log.info("Element is now in view and displayed " + openNewWindow.isDisplayed());
+		System.out.println("Element is now in view and displayed " + openNewWindow.isDisplayed());
 		String parentHandle = driver.getWindowHandle();
-		log.info("Parent Handle: " + parentHandle);
+		System.out.println("Parent Handle: " + parentHandle);
 		
 		//Find Open Window button
 		WebElement openWindow = openNewWindow;
@@ -131,11 +131,11 @@ public class Practice extends TestBase {
 
 		//Get all window handles
 		Set<String> handles = driver.getWindowHandles();
-		log.info(handles + "\n");
+		System.out.print(handles + "\n");
 		
 		//Switching between handles
 		for (String handle: handles){
-			log.info(handle);
+			System.out.println(handle);
 			if (!handle.equals(parentHandle)) {
 				driver.switchTo().window(handle);
 				WebElement searchBox = courseSearchBox;
@@ -154,7 +154,7 @@ public class Practice extends TestBase {
 	
 	public void swithToIframe() throws InterruptedException {
 		scrollElementIntoView(mouseOverExampleLabelHeader);
-		log.info("Element iFrame Examble label is displayed:  " + iframeExampleLabelHeader.isDisplayed());
+		System.out.println("Element iFrame Examble label is displayed:  " + iframeExampleLabelHeader.isDisplayed());
 		driver.switchTo().frame("courses-iframe");
 		WebElement searchBox = courseSearchBox;
 		searchBox.sendKeys("python");
@@ -167,7 +167,7 @@ public class Practice extends TestBase {
 		WebElement [] checkboxes = {bmwCheckBox, benzCheckBox, hondaCheckBox};
 		
 		 for(WebElement checkbox : checkboxes) {
-			 log.info("Print all options we can select : " + checkbox);
+			 System.out.println("Print all options we can select : " + checkbox);
 			 checkbox.click();
 		 }
 		
@@ -176,19 +176,19 @@ public class Practice extends TestBase {
 	public void switchTabWindow() throws InterruptedException {
 		scrollElementIntoView(pageTitle);
 		String parentHandle = driver.getWindowHandle();
-		log.info("Parent Handle: " + parentHandle);
+		System.out.println("Parent Handle: " + parentHandle);
 		
 		//Find Open Window button
 		openTabWindow.click();
-		log.info("Opened new tab");
+		System.out.println("Opened new tab");
 	
 		//Get all window handles
 		Set<String> handles = driver.getWindowHandles();
-		log.info(handles + "\n");
+		System.out.print(handles + "\n");
 		
 		//Switching between handles
 		for (String handle: handles){
-			log.info(handle);
+			System.out.println(handle);
 			if (!handle.equals(parentHandle)) {
 				driver.switchTo().window(handle);
 				//perform some action after switching window
