@@ -1,3 +1,6 @@
 /test-output/
 /target/
 .settings/
+automation.out
+est-outputautomation.out
+.classpath

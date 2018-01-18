@@ -4,13 +4,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.automation.testBase.TestBase;
 
+import seleniumhybrid.PracticeTest;
+
 public class FindLinks{
+	private static final Logger log = LogManager.getLogger(FindLinks.class.getName());
 	
 	public void testFindLinks (WebDriver driver) {
 
@@ -18,10 +23,10 @@ public class FindLinks{
 	for (WebElement link : linksList) {
 		String href = link.getAttribute("href");
 		try {
-			System.out.println("URL " + href + " returned " + linkStatus(new URL(href)));
+			log.info("URL " + href + " returned " + linkStatus(new URL(href)));
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.info(e.getMessage());
 		}
 	}
 	
