@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.automation.pageobjects.Practice;
 import com.automation.testBase.TestBase;
 import com.automation.utilities.FindLinks;
@@ -17,7 +18,7 @@ public class PracticeTest extends TestBase{
 		driver = getDriver();
 	}
 	
-   // @Test
+	@Test
 	public void verifyRadioButtons () {
 		log.info("=== Starting VerifyRadioButtons Test ===");
 	
@@ -26,15 +27,15 @@ public class PracticeTest extends TestBase{
 		log.info("End Test");
 	}
 	
-	//@Test
+	@Test
 		public void verifyDropDown () throws InterruptedException {
 			log.info("=== Starting VerifyDropDown Test ===");
 			practice = new Practice(driver);
 			practice.selectFromDropDown();
-			System.out.println("End Test");
+		log.info("End Test");
 		}
 	
-	//@Test
+	@Test
 	public void verifyCheckBox() {
 		log.info("==== Starting VerifyCheckbox Test ===");
 		practice = new Practice(driver);
@@ -42,24 +43,25 @@ public class PracticeTest extends TestBase{
 		log.info("End Test");
 	}
 	
-	//@Test
+	@Test
 	public void verifySelectBox() throws InterruptedException {
 		log.info("=== Starting VerifySelectBox test ===");
 	    practice = new Practice(driver);
 		practice.selectAndDeselectFromSelectBox();
 		practice.hideAndShowTextBox();
-		System.out.println("End of Test");
+		log.info("End of Test");
 		
 	} 
-   // @Test
+
+	@Test
 	public void verifySwitchToWindow() throws InterruptedException {
 		log.info("=== Starting SwitchToWindow Test ===");
 		practice = new Practice(driver);
 		practice.openSwitchWindow();
-		System.out.println("End of Test");
+		log.info("End of Test");
 	}
 	
-  //  @Test
+	@Test
 	public void verifySwitchToIframe() throws InterruptedException {
 		log.info("=== Starting VerifySwitchToInframe Test ===");
 	    practice = new Practice(driver);
@@ -76,7 +78,7 @@ public class PracticeTest extends TestBase{
    	}
    	
    	
-  //  @Test
+	@Test
    	public void verifyConfirmPopWindow() throws InterruptedException {
    		log.info("=== Starting VerifyConfirmPopWindow Test ===");
    	    practice = new Practice(driver);
@@ -84,7 +86,7 @@ public class PracticeTest extends TestBase{
    		log.info("End of Test");
    	}
     
-  //  @Test
+	@Test
    	public void verifyAlertWindow() throws InterruptedException {
    		log.info("=== Starting VerifyAlertBoxWindow Test ===");
    	    practice = new Practice(driver);
