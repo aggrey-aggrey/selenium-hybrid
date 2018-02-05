@@ -3,6 +3,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.automation.pageobjects.Practice;
@@ -14,8 +15,10 @@ public class PracticeTest extends TestBase{
 	Practice practice;
 	
 	@BeforeMethod
-	public void setUp() {
+	@Parameters({ "appURL", "browserType" })
+	public void setUp(String appURL, String browserType) {
 		driver = getDriver();
+
 	}
 	
 	@Test
