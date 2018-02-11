@@ -1,7 +1,6 @@
 package com.automation.testBase;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,22 +8,24 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
-import seleniumhybrid.PracticeTest;
+import com.automation.customEventListener.WebEventListener;
 
 //@SuppressWarnings("unused")
 @SuppressWarnings("unused")
@@ -35,6 +36,7 @@ public class TestBase {
 	public Properties properties;
 	public File file;
 	public FileInputStream fileinputstream;
+	public static WebEventListener eventListener;
 	static String driverPath = "/src/main/java/com/automation/drivers/";
 	static String configPath = "/src/main/java/com/automation/config/";
 
@@ -42,7 +44,11 @@ public class TestBase {
 		return this.driver;
 	}
 
-	public void setDriver (String browserType, String appURL) {
+	public void setDriver(EventFiringWebDriver driver) {
+		this.driver = driver;
+	}
+
+	public void selectBrowser(String browserType, String appURL) {
 		switch (browserType) {
 		case "chrome":
 			driver = initChromeDriver(appURL);
@@ -61,10 +67,13 @@ public class TestBase {
 		System.out.println("Launching google chrome with new profile..");
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + driverPath  + "chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.navigate().to(appURL);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		return driver;
+		EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+		eventListener = new WebEventListener();
+		eventDriver.register(eventListener);
+		eventDriver.manage().window().maximize();
+		eventDriver.navigate().to(appURL);
+		eventDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		return eventDriver;
 
 	}
 
@@ -72,21 +81,25 @@ public class TestBase {
 		System.out.println("Launching Firefox with new profile..");
 		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +  driverPath + "geckodriver.exe");
 		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.navigate().to(appURL);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		return driver;
-
+		EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+		eventListener = new WebEventListener();
+		eventDriver.register(eventListener);
+		eventDriver.manage().window().maximize();
+		eventDriver.navigate().to(appURL);
+		eventDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		return eventDriver;
 	}
 
 	private static WebDriver initIEDriver(String appURL) {
 		System.out.println("Launching internetexplorer with new profile..");
 		System.setProperty("webdriver.ie.driver", System.getProperty("user.dir") + driverPath + "" );
-		WebDriver driver = new InternetExplorerDriver();
-		driver.manage().window().maximize();
-		driver.navigate().to(appURL);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		return driver;
+		EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
+		eventListener = new WebEventListener();
+		eventDriver.register(eventListener);
+		eventDriver.manage().window().maximize();
+		eventDriver.navigate().to(appURL);
+		eventDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		return eventDriver;
 
 	}
 
@@ -95,7 +108,7 @@ public class TestBase {
 	public void initializeTestBase(String browserType, String appURL) {
 
 		try	{
-			setDriver(browserType,appURL);
+			selectBrowser(browserType, appURL);
 		}catch (Exception e) {
 			System.out.println("Error....." + e.getMessage());
 		}
@@ -210,7 +223,17 @@ public class TestBase {
 		System.out.println(testbase.properties.getProperty("testname"));
 
 	}
-	@AfterClass 
+
+	@AfterMethod
+	public void afterMethod(ITestResult testResult) {
+		if (testResult.getStatus() == ITestResult.FAILURE) {
+			System.out.println("Test Failed: " + testResult.getMethod().getMethodName());
+		}
+		if (testResult.getStatus() == ITestResult.SUCCESS)
+			System.out.println("Test Passed: " + testResult.getName());
+	}
+
+	@AfterClass
 	public void tearDown() {
 		driver.quit();
 	}

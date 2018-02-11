@@ -3,9 +3,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.automation.pageobjects.Course;
 import com.automation.testBase.TestBase;
 
+//@Listeners(InvokedMethodListener.class)
 public class CourseTest extends TestBase{
 	private static final Logger log = LogManager.getLogger(CourseTest.class.getName());
 	Course course;
