@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="2">
+<listeners>
+	<listener class-name="com.automation.customEventListener.IsuiteListener"></listener>
+	<listener class-name="com.automation.customEventListener.InvokedMethodListener"></listener>
+	<listener class-name="com.automation.customEventListener.ItestListener"></listener>
+</listeners>
   <test name="Test1">
 	  <parameter name="appURL" value="https://letskodeit.teachable.com/p/practice"></parameter>
 	  <parameter name="browserType" value="chrome"/>

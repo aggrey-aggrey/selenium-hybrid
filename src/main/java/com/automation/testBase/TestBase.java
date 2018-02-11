@@ -19,7 +19,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
@@ -221,7 +223,17 @@ public class TestBase {
 		System.out.println(testbase.properties.getProperty("testname"));
 
 	}
-	@AfterClass 
+
+	@AfterMethod
+	public void afterMethod(ITestResult testResult) {
+		if (testResult.getStatus() == ITestResult.FAILURE) {
+			System.out.println("Test Failed: " + testResult.getMethod().getMethodName());
+		}
+		if (testResult.getStatus() == ITestResult.SUCCESS)
+			System.out.println("Test Passed: " + testResult.getName());
+	}
+
+	@AfterClass
 	public void tearDown() {
 		driver.quit();
 	}

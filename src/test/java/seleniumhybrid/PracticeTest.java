@@ -10,6 +10,7 @@ import com.automation.pageobjects.Practice;
 import com.automation.testBase.TestBase;
 import com.automation.utilities.FindLinks;
 
+//@Listeners(ItestListener.class)
 public class PracticeTest extends TestBase{
 	private static final Logger log = LogManager.getLogger(PracticeTest.class.getName());
 	Practice practice;
