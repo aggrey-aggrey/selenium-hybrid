@@ -2,15 +2,32 @@ package com.automation.customEventListener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 
-import com.automation.testBase.TestBase;
+public class CustomListener implements ISuiteListener, ITestListener, IInvokedMethodListener {
 
-public class ItestListener extends TestBase implements ITestListener {
-	private static final Logger log = LogManager.getLogger(ItestListener.class.getName());
+	private static final Logger log = LogManager.getLogger(CustomListener.class.getName());
+
+	@Override
+	public void onStart(ISuite suite) {
+		// TODO When <suite> tag starts
+		log.info("OnStart: before suite startes " + suite.getName());
+
+	}
+
+	@Override
+	public void onFinish(ISuite suite) {
+		// TODO when <suite> tag completes
+		log.info("OnFinish: before suite startes " + suite.getName());
+
+	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
@@ -51,7 +68,7 @@ public class ItestListener extends TestBase implements ITestListener {
 		// TODO will execute before <test> tag of testng.xml file
 		log.info("OnStart -> Test  Tag Name: " + context.getName());
 		ITestNGMethod methods[] = context.getAllTestMethods();
-		log.info("These methosds will be executed in this test tag:");
+		log.info("These methods will be executed in this test tag:");
 		for (ITestNGMethod method : methods) {
 			log.info(method.getMethodName());
 		}
@@ -62,6 +79,22 @@ public class ItestListener extends TestBase implements ITestListener {
 	public void onFinish(ITestContext context) {
 		// TODO will execute after <test> tag of testng.xml file
 		log.info("OnFinish -> Test Tag Name: " + context.getName());
+
+	}
+
+	@Override
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+		// Run before every method in the Test class
+		log.info("before invocation: " + testResult.getTestClass().getName() + "=>"
+				+ method.getTestMethod().getMethodName());
+
+	}
+
+	@Override
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+		// Run after every method in the Test class
+		log.info("after invocation: " + testResult.getTestClass().getName() + "=>"
+				+ method.getTestMethod().getMethodName());
 
 	}
 

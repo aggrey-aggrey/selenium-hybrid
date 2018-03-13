@@ -2,9 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite">
 <listeners>
-	<listener class-name="com.automation.customEventListener.IsuiteListener"></listener>
-	<listener class-name="com.automation.customEventListener.InvokedMethodListener"></listener>
-	<listener class-name="com.automation.customEventListener.ItestListener"></listener>
+	<listener class-name="com.automation.customEventListener.CustomListener"></listener>
 </listeners>
 <parameter name="appURL" value="https://letskodeit.teachable.com/courses"></parameter>
 <parameter name="browserType" value="chrome"/>
